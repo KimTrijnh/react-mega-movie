@@ -23,13 +23,15 @@ class App extends Component {
       term: "",
       valueR: { minR: 0, maxR: 10 },
       valueY: { minY: 1900, maxY: 2019 },
-      title: "NOW PLAYING"
+      title: "NOW PLAYING",
+      highestRateChecked: false
     };
 
     this.switchType = this.switchType.bind(this);
     this.genreElement = React.createRef();
     this.termElement = React.createRef();
     this.slidersElement = React.createRef();
+    this.higestRatingElement = React.createRef();
   }
 
   bindId = id => {
@@ -51,6 +53,47 @@ class App extends Component {
       this.updateChange()
     );
   };
+  bindHighestRating = isChecked => {
+    this.setState({ highestRateChecked: isChecked }, () => this.updateChange());
+  };
+
+  updateChange() {
+    const { id, term, valueR, valueY, highestRateChecked } = this.state;
+    console.log("4", id, term, valueR, valueY, this.state.fullMovies);
+    let displayedMovies;
+
+    if (id === -1) {
+      displayedMovies = this.state.fullMovies;
+    } else {
+      displayedMovies = this.state.fullMovies.filter(
+        movie => movie.genre_ids.indexOf(id) !== -1
+      );
+    }
+    //filter rating
+    displayedMovies = displayedMovies.filter(
+      movie =>
+        valueR.minR <= movie.vote_average && movie.vote_average <= valueR.maxR
+    );
+
+    //filter year
+    displayedMovies = displayedMovies.filter(
+      movie =>
+        valueY.minY <= Number(movie.release_date.slice(0, 4)) &&
+        Number(movie.release_date.slice(0, 4)) <= valueY.maxY
+    );
+
+    //filter by term
+    displayedMovies = displayedMovies.filter(
+      movie => movie.title.toLowerCase().indexOf(term.toLowerCase()) !== -1
+    );
+
+    //sort or not sort (rating)
+    if (highestRateChecked) {
+      displayedMovies.sort((a, b) => b.vote_average - a.vote_average);
+    }
+
+    this.setState({ displayedMovies: displayedMovies });
+  }
 
   componentDidMount() {
     const API_KEY = "f55e42fa6f08a80dc89685d49eab586d";
@@ -90,40 +133,9 @@ class App extends Component {
     this.genreElement.current.reset();
     this.termElement.current.reset();
     this.slidersElement.current.reset();
+    this.higestRatingElement.current.reset();
+
   };
-
-  updateChange() {
-    const { id, term, valueR, valueY } = this.state;
-    console.log("4", id, term, valueR, valueY, this.state.fullMovies);
-    let displayedMovies;
-
-    if (id === -1) {
-      displayedMovies = this.state.fullMovies;
-    } else {
-      displayedMovies = this.state.fullMovies.filter(
-        movie => movie.genre_ids.indexOf(id) !== -1
-      );
-    }
-    //filter rating
-    displayedMovies = displayedMovies.filter(
-      movie =>
-        valueR.minR <= movie.vote_average && movie.vote_average <= valueR.maxR
-    );
-
-    //filter year
-    displayedMovies = displayedMovies.filter(
-      movie =>
-        valueY.minY <= Number(movie.release_date.slice(0, 4)) &&
-        Number(movie.release_date.slice(0, 4)) <= valueY.maxY
-    );
-
-    //filter by term
-    displayedMovies = displayedMovies.filter(
-      movie => movie.title.toLowerCase().indexOf(term.toLowerCase()) !== -1
-    );
-
-    this.setState({ displayedMovies: displayedMovies });
-  }
 
   handleSelected(selectedPage) {
     //for the pagination
@@ -151,7 +163,8 @@ class App extends Component {
     this.genreElement.current.reset();
     this.termElement.current.reset();
     this.slidersElement.current.reset();
-  }
+    this.higestRatingElement.current.reset();
+    }
 
   render() {
     const { isLoading, displayedMovies, genresData, title } = this.state;
@@ -166,6 +179,10 @@ class App extends Component {
           <Row>
             <Col md="3">
               <SwitchType switchType={this.switchType} />
+              <HighestRating 
+              ref={this.higestRatingElement}
+              bind={this.bindHighestRating}
+              update={this.updateChange} />
               <SearchByGenre
                 ref={this.genreElement}
                 genres={genresData}
@@ -207,4 +224,32 @@ class App extends Component {
   }
 }
 
+class HighestRating extends React.Component {
+  constructor() {
+    super();
+    this.state = { isChecked: false };
+  }
+
+  handleCheck = e => {
+    this.setState({ isChecked: e.target.checked }, () =>
+      this.props.bind(this.state.isChecked)
+    );
+  };
+
+  reset () {
+    this.setState({isChecked: false}, () => document.getElementById("checkbox").checked = false )
+}
+  render() {
+    return (
+      <div className="d-flex justify-content-end p-3">
+        <input
+         id="checkbox"
+          type="checkbox"
+          onChange={e => this.handleCheck(e)}
+        />
+        <span class="badge badge-warning">Highest Ratings</span>
+      </div>
+    );
+  }
+}
 export default App;
