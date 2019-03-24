@@ -8,6 +8,7 @@ import MoviesGoHere from "./MoviesGoHere";
 import SwitchType from "./SwitchType";
 import SearchByTerm from "./SearchByTerm";
 import SearchByGenre from "./SearchByGenre";
+import MovieInfo from "./MovieInfo";
 
 class App extends Component {
   constructor() {
@@ -22,7 +23,7 @@ class App extends Component {
       term: "",
       valueR: { minR: 0, maxR: 10 },
       valueY: { minY: 1900, maxY: 2019 },
-    
+      title: "NOW PLAYING"
     };
 
     this.switchType = this.switchType.bind(this);
@@ -32,7 +33,6 @@ class App extends Component {
   }
 
   bindId = id => {
-
     this.setState({ id: id }, () => this.updateChange());
   };
 
@@ -54,7 +54,9 @@ class App extends Component {
 
   componentDidMount() {
     const API_KEY = "f55e42fa6f08a80dc89685d49eab586d";
-    const MoviesUrl = `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&page=${this.state.selectedPage}`;
+    const MoviesUrl = `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&page=${
+      this.state.selectedPage
+    }`;
 
     fetch(MoviesUrl)
       .then(response => response.json())
@@ -63,14 +65,16 @@ class App extends Component {
           isLoading: false,
           fullMovies: data.results,
           displayedMovies: data.results,
-          totalItems: data.total_results,
+          totalItems: data.total_results
         });
       });
   }
 
   switchType = type => {
     const API_KEY = "f55e42fa6f08a80dc89685d49eab586d";
-    const MoviesUrl = `https://api.themoviedb.org/3/movie/${type}?api_key=${API_KEY}&page=${this.state.selectedPage}`;
+    const MoviesUrl = `https://api.themoviedb.org/3/movie/${type}?api_key=${API_KEY}&page=${
+      this.state.selectedPage
+    }`;
     fetch(MoviesUrl)
       .then(response => response.json())
       .then(data =>
@@ -78,6 +82,7 @@ class App extends Component {
           fullMovies: data.results,
           displayedMovies: data.results,
           totalItems: data.total_results,
+          title: type.replace("_", " ").toUpperCase()
         })
       );
 
@@ -126,9 +131,11 @@ class App extends Component {
     this.setState({ selectedPage: selectedPage }, () => this.switchPage());
   }
 
-  switchPage () {
+  switchPage() {
     const API_KEY = "f55e42fa6f08a80dc89685d49eab586d";
-    const MoviesUrl = `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&page=${this.state.selectedPage}`;
+    const MoviesUrl = `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&page=${
+      this.state.selectedPage
+    }`;
 
     fetch(MoviesUrl)
       .then(response => response.json())
@@ -136,28 +143,40 @@ class App extends Component {
         this.setState({
           isLoading: false,
           fullMovies: data.results,
-          displayedMovies: data.results,
+          displayedMovies: data.results
         });
       });
 
-  //reset all genre select, sliders, term search
+    //reset all genre select, sliders, term search
     this.genreElement.current.reset();
     this.termElement.current.reset();
     this.slidersElement.current.reset();
   }
 
   render() {
-    const { isLoading, displayedMovies, genresData } = this.state;
+    const { isLoading, displayedMovies, genresData, title } = this.state;
     return (
-      <div className="App">
-        <header className="text-center">
-          <h1>Hello</h1>
-          <p className="lead">MOVIES</p>
+      <div className="App py-4">
+        <header className="text-center py-4">
+          <h1> Hello</h1>
+          {/* <img src="./megaman.png" width="64px" alt="popcorn"/> */}
+          <p className="lead">{title}</p>
         </header>
         <div className="container-fluid">
           <Row>
-            {/* aside */}
             <Col md="3">
+              <SwitchType switchType={this.switchType} />
+              <SearchByGenre
+                ref={this.genreElement}
+                genres={genresData}
+                update={this.updateChange}
+                bind={this.bindId}
+              />
+              <SearchByTerm
+                ref={this.termElement}
+                bind={this.bindTerm}
+                update={this.updateChange}
+              />
               <Sliders
                 ref={this.slidersElement}
                 bindR={this.bindRating}
@@ -165,32 +184,8 @@ class App extends Component {
                 update={this.updateChange}
               />
             </Col>
-            {/* Main */}
+
             <Col md="9">
-              <Nav pills>
-                <SwitchType switchType={this.switchType} />
-
-                <NavItem>
-                  <NavLink href="#">
-                    <SearchByGenre
-                      ref={this.genreElement}
-                      genres={genresData}
-                      update={this.updateChange}
-                      bind={this.bindId}
-                    />
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink>
-                    <SearchByTerm
-                      ref={this.termElement}
-                      bind={this.bindTerm}
-                      update={this.updateChange}
-                    />
-                  </NavLink>
-                </NavItem>
-              </Nav>
-
               {isLoading ? (
                 <h1 className="text-center">No Movie! </h1>
               ) : (
@@ -199,13 +194,13 @@ class App extends Component {
             </Col>
           </Row>
         </div>
-        <footer className="py-5">     
-        <PaginationComponent
-        className="pagination"
-          totalItems={979}
-          pageSize={20}
-          onSelect={(e) => this.handleSelected(e)}
-        />
+        <footer className="py-5">
+          <PaginationComponent
+            className="pagination"
+            totalItems={979}
+            pageSize={20}
+            onSelect={e => this.handleSelected(e)}
+          />
         </footer>
       </div>
     );
@@ -213,4 +208,3 @@ class App extends Component {
 }
 
 export default App;
-

@@ -33,7 +33,7 @@ class SearchByGenre extends React.Component {
     render() {
       const { genres } = this.props;
       return (
-        <form onSubmit={e => e.preventDefault()}>
+        <form onSubmit={e => e.preventDefault()} className="p-3 mt-4">
           <select
             className="form-control"
             value={this.state.value}     //option having this value will be displayed

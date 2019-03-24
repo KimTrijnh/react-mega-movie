@@ -8,20 +8,18 @@ class SwitchType extends React.Component {
     }
   
     handleClick(e) {
-    console.log("han", e.target.value);
       this.props.switchType(e.target.value);
     }
     render() {
       return (
-        <div className="d-flex">
-          <NavItem>
-          <button className="btn btn-success" value="now_playing" onClick={(e) => this.handleClick(e)}>
+        <div className="d-flex justify-content-end">        
+        <button className="btn btn-primary mr-2" value="now_playing" onClick={(e) => this.handleClick(e)}>
           Now playing
         </button>
-        <button className="btn btn-info" value="top_rated" onClick={(e) => this.handleClick(e)}>
+        <button className="btn btn-info mx-3" value="top_rated" onClick={(e) => this.handleClick(e)}>
           Top rated
         </button>
-          </NavItem>
+      
         </div>
       );
     }

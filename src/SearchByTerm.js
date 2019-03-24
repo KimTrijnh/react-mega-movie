@@ -16,7 +16,7 @@ class SearchByTerm extends React.Component {
   //() => this.props.termFilter(this.state.value)
     render() {
       return (
-        <form onSubmit={(e) => e.preventDefault()}>
+        <form onSubmit={(e) => e.preventDefault()} className="p-3">
           <input
             id="search-input"
             type="search"

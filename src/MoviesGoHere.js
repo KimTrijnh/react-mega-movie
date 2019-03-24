@@ -1,5 +1,8 @@
 import React from "react";
 import { Container, Row, Col } from "reactstrap";
+import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom'
+
+import MovieInfo from "./MovieInfo";
 import {
   Card,
   CardImg,
@@ -25,6 +28,7 @@ class MoviesGoHere extends React.Component {
               <CardBody>
                 <CardTitle>{movie.original_title}</CardTitle>
                 <CardText>
+                <Link to="/movieinfo" overview={movie.overview}>Read more</Link>
                   <small className="text-muted d-block">
                     <strong>Rating: </strong>
                     {movie.vote_average}
@@ -33,6 +37,7 @@ class MoviesGoHere extends React.Component {
                     <strong>Release Date: </strong>
                     {movie.release_date}
                   </small>
+
                 </CardText>
               </CardBody>
             </Card>
