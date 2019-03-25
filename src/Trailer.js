@@ -38,13 +38,10 @@ export default class Trailer extends Component {
         return (
             <div className="container">
                 <div className="row">
-
                     <div className="col-12 col-sm-5">
-                        <ul>
-                            {this.state.trailers.map((trailer, index) => (
-                                <p key={index}>{index +1}. <a href="#" onClick={() => this.chooseTrailer(index)}>{trailer.name}</a></p>
-                            ))}
-                        </ul>
+                        {this.state.trailers.map((trailer, index) => (
+                            <p key={index}>{index + 1}. <a href="#" onClick={() => this.chooseTrailer(index)}>{trailer.name}</a></p>
+                        ))}
                     </div>
                     <div className="col-12 col-sm-7">
                         <div className="videoWrapper">
