@@ -21,13 +21,13 @@ export default class Trailer extends Component {
                     trailer: data.results.find(ele => {
                         return ele.type === 'Trailer'
                     })
-                }, () => console.log(this.state.trailer));
+                });
             });
     }
 
     render() {
         return (
-            <div>
+            <div className="videoWrapper">
                 <YouTube
                     video={this.state.trailer.key}
                     autoplay
