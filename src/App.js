@@ -247,7 +247,7 @@ class HighestRating extends React.Component {
           type="checkbox"
           onChange={e => this.handleCheck(e)}
         />
-        <span class="badge badge-warning">Highest Ratings</span>
+        <span className="badge badge-warning">Highest Ratings</span>
       </div>
     );
   }
