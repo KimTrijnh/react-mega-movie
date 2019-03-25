@@ -21,7 +21,7 @@ class SearchByTerm extends React.Component {
             id="search-input"
             type="search"
             className="form-control"
-            placeHolder="Search..."
+            placeholder="Search..."
             value={this.state.value}
             onChange={(e) => this.handleChange(e)}
           />

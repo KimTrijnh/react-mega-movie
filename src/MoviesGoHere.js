@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "reactstrap";
 import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom'
+import TrailerModal from "./TrailerModal";
 
 import MovieInfo from "./MovieInfo";
 import {
@@ -13,6 +14,7 @@ import {
 
 class MoviesGoHere extends React.Component {
   render() {
+    console.log(this.props.movies);
     const Imgbase = `https://image.tmdb.org/t/p/w200`;
     return (
       <Row>
@@ -28,7 +30,8 @@ class MoviesGoHere extends React.Component {
               <CardBody>
                 <CardTitle>{movie.original_title}</CardTitle>
                 <CardText>
-                <Link to="/movieinfo" overview={movie.overview}>Read more</Link>
+                  <Link to="/movieinfo" overview={movie.overview}>Read more</Link>
+                  <TrailerModal movieId = {movie.id} buttonLabel="Trailer"/>
                   <small className="text-muted d-block">
                     <strong>Rating: </strong>
                     {movie.vote_average}
