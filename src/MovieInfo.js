@@ -2,6 +2,7 @@ import React from 'react';
 
 class MovieInfo extends React.Component {
     render() {
+      console.log(this.props);
       const { params } = this.props.match
       return (
         <div>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Row, Col, Nav, NavItem, NavLink } from "reactstrap";
+import { Row, Col } from "reactstrap";
 import PaginationComponent from "react-reactstrap-pagination";
 import "./App.css";
 import Sliders from "./Sliders";
@@ -8,7 +8,6 @@ import MoviesGoHere from "./MoviesGoHere";
 import SwitchType from "./SwitchType";
 import SearchByTerm from "./SearchByTerm";
 import SearchByGenre from "./SearchByGenre";
-import MovieInfo from "./MovieInfo";
 
 class App extends Component {
   constructor() {
