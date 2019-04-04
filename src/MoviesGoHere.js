@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col } from "reactstrap";
-import { Link, BrowserRouter as Router } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import TrailerModal from "./TrailerModal";
 
 
