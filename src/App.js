@@ -171,7 +171,7 @@ class App extends Component {
     return (
       <div className="App py-4">
         <header className="text-center py-4">
-          <h1> Hello</h1>
+          <h1>Hello<img src="/img/PopCorn.png" alt="popcorn" width="50px"/></h1>
           {/* <img src="./megaman.png" width="64px" alt="popcorn"/> */}
           <p className="lead">{title}</p>
         </header>

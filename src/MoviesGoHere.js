@@ -19,7 +19,7 @@ class MoviesGoHere extends React.Component {
     return (
       <Row>
         {this.props.movies.map(movie => (
-          <Col md="3">
+          <Col md="3" className="mb-3">
             <Card>
               <CardImg
                 top
