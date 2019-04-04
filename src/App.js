@@ -9,6 +9,7 @@ import SwitchType from "./SwitchType";
 import SearchByTerm from "./SearchByTerm";
 import SearchByGenre from "./SearchByGenre";
 
+
 class App extends Component {
   constructor() {
     super();

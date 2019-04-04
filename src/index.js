@@ -1,22 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom'
-import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
+import './index.css';
 import App from './App';
+import { Route, Link, BrowserRouter, Switch } from 'react-router-dom'
 import MovieInfo from "./MovieInfo";
 import Notfound from './notfound';
 import * as serviceWorker from './serviceWorker';
 
 const routing = (
-    <Router>
+
+    <BrowserRouter>
         <Switch>
           <Route exact path="/" component={App} />
           <Route path="/movieInfo/:id" component={MovieInfo} />
           <Route component={Notfound} />
         </Switch>
-
-    </Router>
+    </BrowserRouter>
   )
   
 ReactDOM.render(routing, document.getElementById('root'))

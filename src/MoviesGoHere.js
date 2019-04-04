@@ -1,9 +1,10 @@
 import React from "react";
 import { Row, Col } from "reactstrap";
-import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom'
+import { Link, BrowserRouter as Router } from 'react-router-dom'
 import TrailerModal from "./TrailerModal";
 
-import MovieInfo from "./MovieInfo";
+
+
 import {
   Card,
   CardImg,
