@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom'
 class MovieInfo extends React.Component {
 constructor() {
   super();
@@ -18,7 +18,7 @@ componentDidMount() {
       isLoading: false,
       movie : data
     });
-  });
+  }).catch(err => alert(err))
 }
 
     render() {
@@ -32,30 +32,33 @@ componentDidMount() {
       
        return (
          
-        <div className="container bg bg-dark text-light">
-          <h1>Movie Overview</h1>
+        <div className="container bg bg-dark text-light py-4" style={{boxShadow: '5px 5px 5px gray'}} >
+        <div>
+        <Link to="/"> Back to Home</Link>
+        
+          <h1 className="text-center">Movie Overview</h1>
         {isLoading ? <div>Loading...</div> : 
  
-          (<div>
-            <h1>{movie.original_title}</h1>
-          <div>
-          <div>
-          <img scr={Imgbase + movie.poster_path} alt={movie.original_title}/>
-          <h1>
-          <strong>{Imgbase + movie.poster_path}</strong> 
-           {/* {movie.genres.map(genre => <span>genre.name</span>)} */}
-          </h1>
+          (<div className="py-3 pl-2">
+          <h3>{movie.original_title}</h3>
+          <span className="text-muted">{movie.release_date}</span>
+          <div className="row">
+          <div className="col-sm-12 col-md-4 text-center my-3">
+          <img src={Imgbase + movie.poster_path} alt={movie.original_title} style={{width: '320px'}}/>
           </div>
+            <div className="col-sm-12 col-md-8 px-4 ">
             <div>
+            {movie.genres.map(genre => <span className="badge badge-primary m-2">{genre.name}</span>)}
+            </div>
+
             <h2>Overview</h2>
             <p>{movie.overview}</p>
+            <a href={movie.homepage} target="blank"><button className="btn btn-primary">Go to its homepage</button></a>
             </div>
           </div>
           </div>)
         }
-
-
-          
+        </div>
         </div>
       )
     }
